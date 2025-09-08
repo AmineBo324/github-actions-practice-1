@@ -1,7 +1,6 @@
 name: Event Name Detector
 
-on:
-  workflow_dispatch:   
+on:   
   push:                
   pull_request:        
 
