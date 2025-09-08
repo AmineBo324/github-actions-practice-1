@@ -12,7 +12,7 @@ jobs:
       APP_NAME: 'TestApp'
     steps:
     # Your Step 1: GitHub Context Information
-      name : Github context Information
+      -name : Github context Information
       run : |
         echo "=== GitHub Context ==="
         echo "Repository: ${{ github.repository }}"
@@ -22,7 +22,7 @@ jobs:
         echo "Run number: ${{ github.run_number }}"
         echo "Workflow name: ${{ github.workflow }}"
     # Your Step 2: Runner Environment Information
-      name : Runner Environment Information
+      -name : Runner Environment Information
       run : |
         echo "=== Runner Environment ==="
         echo "Operating System: ${{ runner.os }}"
@@ -31,7 +31,7 @@ jobs:
         echo "Tool cache directory: ${{ runner.tool_cache }}"
         echo "Temporary directory: ${{ runner.temp }}"
     # Your Step 3: Environment Variables Test
-      name : Environment Variable Test
+      -name : Environment Variable Test
       run : | 
         echo "=== Environment Variables ==="
         echo "Node version from env: ${{ env.NODE_VERSION }}"
@@ -40,7 +40,7 @@ jobs:
         echo "System PATH exists: ${{ env.PATH != '' }}"
         echo "Home directory: ${{ env.HOME }}"
     # Your Step 4: Secrets Context Test
-      name : Secrets Context Test
+      -name : Secrets Context Test
       env:
         TEST_API_KEY: "key"
         DATABASE_URL: "db url"
