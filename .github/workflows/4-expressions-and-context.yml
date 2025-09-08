@@ -61,50 +61,50 @@ jobs:
     needs: context-explorer
     runs-on: ubuntu-latest
     steps:
-    # Your Step 1: Branch-based Conditional Steps (3 separate conditional steps)
-    - name : Run only on main branch
-    if: github.ref_name == 'main'
-    run: echo "This is the main branch!"
+      # Step 1: Branch-based Conditional Steps
+      - name: Run only on main branch
+        if: github.ref_name == 'main'
+        run: echo "This is the main branch!"
 
-    - name : Run only on dev branch
-    if: github.ref_name == 'feature/'
-    run: echo "This is the feature branch"
+      - name: Run only on feature branch
+        if: startsWith(github.ref_name, 'feature/')
+        run: echo "This is a feature branch"
 
-    - name : Run only on release branch
-    if: github.ref_name != 'main' && github.ref_name != 'feature/'
-    run: echo "This  is the other branch"
-    # Your Step 2: OS Conditional Steps (3 separate conditional steps)
+      - name: Run only on release branch
+        if: startsWith(github.ref_name, 'release/')
+        run: echo "This is a release branch"
 
-    - name : Linux Os
-    if: `runner.os` == `Linux`
-    run: |
-      echo "Running on Linux - using apt package manager"
-      echo "Linux runner detected: ${{ runner.os }}"
+      # Step 2: OS Conditional Steps
+      - name: Linux OS
+        if: runner.os == 'Linux'
+        run: |
+          echo "Running on Linux - using apt package manager"
+          echo "Linux runner detected: ${{ runner.os }}"
 
-    - name : MacOS
-    if: `runner.os` == `macOS`
-    run: |
-      echo "Running on macOS - using apt package manager"
-      echo "macOS runner detected: ${{ runner.os }}"
-    
-    - name :Windows
-    if: `runner.os` == `Windows`
-    run: |
-      echo "Running on Windows - using apt package manager"
-      echo "Windows runner detected: ${{ runner.os }}"
-    # Your Step 3: String Manipulation Functions
+      - name: macOS
+        if: runner.os == 'macOS'
+        run: |
+          echo "Running on macOS - using brew package manager"
+          echo "macOS runner detected: ${{ runner.os }}"
 
-    - name: String Functions Demo
-      run: |
-        echo "=== String Transformations ==="
-        echo "Original ref: ${{ github.ref }}"
-        echo "Clean branch name: ${{ replace(github.ref, 'refs/heads/', '') }}"
-        echo "Uppercase branch: ${{ upper(github.ref_name) }}"
-        echo "Lowercase branch: ${{ lower(github.ref_name) }}"
-        echo "Branch contains 'main': ${{ contains(github.ref_name, 'main') }}"
-        echo "Branch starts with 'feature': ${{ startsWith(github.ref_name, 'feature/') }}"
+      - name: Windows
+        if: runner.os == 'Windows'
+        run: |
+          echo "Running on Windows - using choco package manager"
+          echo "Windows runner detected: ${{ runner.os }}"
 
-        echo "=== Conditional Logic ==="
-        echo "Environment type: ${{ github.ref_name == 'main' && 'production' || 'development' }}"
-        echo "Runner type: ${{ runner.os == 'Linux' && 'unix' || 'other' }}"
-        echo "Branch category: ${{ startsWith(github.ref_name, 'feature/') && 'feature' || 'stable' }}"
+      # Step 3: String Manipulation Functions
+      - name: String Functions Demo
+        run: |
+          echo "=== String Transformations ==="
+          echo "Original ref: ${{ github.ref }}"
+          echo "Clean branch name: ${{ replace(github.ref, 'refs/heads/', '') }}"
+          echo "Uppercase branch: ${{ upper(github.ref_name) }}"
+          echo "Lowercase branch: ${{ lower(github.ref_name) }}"
+          echo "Branch contains 'main': ${{ contains(github.ref_name, 'main') }}"
+          echo "Branch starts with 'feature': ${{ startsWith(github.ref_name, 'feature/') }}"
+
+          echo "=== Conditional Logic ==="
+          echo "Environment type: ${{ github.ref_name == 'main' && 'production' || 'development' }}"
+          echo "Runner type: ${{ runner.os == 'Linux' && 'unix' || 'other' }}"
+          echo "Branch category: ${{ startsWith(github.ref_name, 'feature/') && 'feature' || 'stable' }}"
